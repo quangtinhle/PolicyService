@@ -43,6 +43,21 @@ public class JsonIDSConverter {
         return false;
     }
 
+    public boolean addConsumerCondition() {
+        if(!recieverOdrlPolicy.getConsumer().equals("")) {
+            RightOperandType rightOperandType = RightOperandType.ANYURI;
+            ConditionType conditionType = ConditionType.CONSTRAINT;
+            LeftOperand leftOperand = LeftOperand.CONNECTOR;
+            ArrayList<RightOperand> rightOperands = new ArrayList<>();
+            RightOperand rightOperand = new RightOperand(recieverOdrlPolicy.getConsumer(), rightOperandType);
+            rightOperands.add(rightOperand);
+            Condition constraint = new Condition(conditionType, leftOperand, Operator.SAME_AS, rightOperands, null);
+            constraints.add(constraint);
+            return true;
+        }
+        return false;
+    }
+
     public boolean addPurposeCondition() {
 
         if(!recieverOdrlPolicy.getPurpose().equals("")) {
