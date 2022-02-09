@@ -72,7 +72,8 @@ public class JsonIDSConverter {
         return false;
     }
 
-    public boolean addPaymentCondition() {
+ /*   public boolean addPaymentCondition() {
+        Compensation compensation = recieverOdrlPolicy.getCompensation();
         if (recieverOdrlPolicy.getPayment() != "") {
             String contract = "http://dbpedia.org/page/";
             RightOperand paymentRightOperand = new RightOperand(String.valueOf(recieverOdrlPolicy.getPrice()), RightOperandType.DOUBLE);
@@ -86,7 +87,23 @@ public class JsonIDSConverter {
             return true;
         }
         return false;
-    }
+    }*/
+ public boolean addPaymentCondition() {
+     Compensation compensation = recieverOdrlPolicy.getCompensation();
+     if (compensation.getPayment() != "") {
+         String contract = "http://dbpedia.org/page/";
+         RightOperand paymentRightOperand = new RightOperand(String.valueOf(compensation.getPrice()), RightOperandType.DOUBLE);
+         ArrayList<RightOperand> paymentRightOperands = new ArrayList<>();
+         paymentRightOperands.add(paymentRightOperand);
+         Condition paymentCondition = new Condition(ConditionType.CONSTRAINT, LeftOperand.PAY_AMOUNT, Operator.EQ,
+                 paymentRightOperands, null);
+         paymentCondition.setUnit("http://dbpedia.org/resource/" + compensation.getUnit());
+         paymentCondition.setContract(contract + compensation.getPayment());
+         constraints.add(paymentCondition);
+         return true;
+     }
+     return false;
+ }
 
     private String checkIfEmptyValue(String value, String defaultValue) {
         if (value.length() > 0) {
@@ -94,6 +111,50 @@ public class JsonIDSConverter {
         } else {
             return defaultValue;
         }
+    }
+
+    public boolean addUsagePeriod() {
+        ArrayList<RightOperandEntity> durationEntities = new ArrayList<>();
+        RightOperand elapsedTimeRightOperand = new RightOperand();
+        elapsedTimeRightOperand.setType(RightOperandType.DURATIONENTITY);
+
+        UsagePeriod usagePeriod = recieverOdrlPolicy.getUsagePeriod();
+        String hour = "";
+        String day = "";
+        String month = "";
+        String year = "";
+        if (usagePeriod.getDurationHour()!= null && !usagePeriod.getDurationHour().isEmpty()) {
+            hour = "T" + usagePeriod.getDurationHour() + TimeUnit.HOURS.getOdrlXsdDuration();
+        }
+        if (usagePeriod.getDurationDay() != null && !usagePeriod.getDurationDay().isEmpty()) {
+            day = usagePeriod.getDurationDay() + TimeUnit.DAYS.getOdrlXsdDuration();
+        }
+        if (usagePeriod.getDurationMonth() != null && !usagePeriod.getDurationMonth().isEmpty()) {
+            month = usagePeriod.getDurationMonth() + TimeUnit.MONTHS.getOdrlXsdDuration();
+        }
+        if (usagePeriod.getDurationYear() != null && !usagePeriod.getDurationYear().isEmpty()) {
+            year = usagePeriod.getDurationYear() + TimeUnit.YEARS.getOdrlXsdDuration();
+        }
+        String duration = "P" + year + month + day + hour;
+
+        if (!duration.equals("P")) {
+            RightOperandEntity hasDurationEntity = new RightOperandEntity(EntityType.HASDURATION, duration,
+                    RightOperandType.DURATION);
+            // hasDurationEntity.setTimeUnit(TimeUnit.valueOf(restrictTimeDurationUnit));
+            durationEntities.add(hasDurationEntity);
+        }
+
+        if (durationEntities.size() > 0) {
+            elapsedTimeRightOperand.setEntities(durationEntities);
+            ArrayList<RightOperand> elapsedTimeRightOperands = new ArrayList<>();
+            elapsedTimeRightOperands.add(elapsedTimeRightOperand);
+            Condition elapsedTimeConstraint = new Condition(ConditionType.CONSTRAINT, LeftOperand.ELAPSED_TIME,
+                    Operator.SHORTER_EQ, elapsedTimeRightOperands, null);
+            constraints.add(elapsedTimeConstraint);
+            return true;
+        }
+        return false;
+
     }
 
     public String createPolicy(String policyUID) {

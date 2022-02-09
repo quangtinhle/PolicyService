@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 @Getter
 public class RequestInput{
-    @JsonProperty("perferenceID")
-    private String perferenceID;
+    @JsonProperty("perferenceUUID")
+    private String perferenceUUID;
     private String creationTime;
     private ArrayList<String> targetData;
     private String dataHistory;
@@ -17,7 +17,7 @@ public class RequestInput{
     private String location;
     private Compensation compensation;
     private String modification;
-    private String usagePeriod;
+    private UsagePeriod usagePeriod;
     private String purpose;
     private int usageCount;
 }

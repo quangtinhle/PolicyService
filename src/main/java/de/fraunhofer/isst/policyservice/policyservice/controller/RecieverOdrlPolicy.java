@@ -11,7 +11,8 @@ import java.util.List;
 @Setter
 public class RecieverOdrlPolicy {
 
-    private String perferenceID;
+    private String perferenceUUID;
+    private String creationTime;
     private String policyType;
     private String target;
     private String provider;
@@ -45,6 +46,9 @@ public class RecieverOdrlPolicy {
     private String payment;
     private String price;
     private String unit;
+
+    private UsagePeriod usagePeriod;
+    private Compensation compensation;
 
 /*    private String encoding;
     private String policy;
