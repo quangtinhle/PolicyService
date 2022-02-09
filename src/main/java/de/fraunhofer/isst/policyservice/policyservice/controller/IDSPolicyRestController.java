@@ -45,10 +45,10 @@ public class IDSPolicyRestController {
         //String uid = baseUid + "complex-policy-access";
         String uid = baseUid + UUID.randomUUID();
         converter.addLocationCondition();
-        converter.addCounterCondition();
-        converter.addPaymentCondition();
-        converter.addPurposeCondition();
-        converter.addUsagePeriod();
+        //converter.addCounterCondition();
+        //converter.addPaymentCondition();
+        //converter.addPurposeCondition();
+        //converter.addUsagePeriod();
         return converter.createPolicy(uid);
     }
 

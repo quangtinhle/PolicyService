@@ -34,7 +34,7 @@ public class JsonIDSConverter {
             ConditionType conditionType = ConditionType.CONSTRAINT;
             LeftOperand leftOperand = LeftOperand.ABSOLUTE_SPATIAL_POSITION;
             ArrayList<RightOperand> rightOperands = new ArrayList<>();
-            RightOperand rightOperand = new RightOperand(recieverOdrlPolicy.getLocation(), rightOperandType);
+            RightOperand rightOperand = new RightOperand("https://ontologi.es/place/"+ recieverOdrlPolicy.getLocation(), rightOperandType);
             rightOperands.add(rightOperand);
             Condition constraint = new Condition(conditionType, leftOperand, Operator.SAME_AS , rightOperands, null);
             constraints.add(constraint);
@@ -167,6 +167,7 @@ public class JsonIDSConverter {
             rules.get(0).setPreduties((ArrayList<Rule>) preDuties);
         }
         OdrlPolicy odrlPolicy = new OdrlPolicy();
+        odrlPolicy.setProvider(createProvider());
         odrlPolicy.setConsumer(createConsumer());
         odrlPolicy.setRules((ArrayList<Rule>) rules);
         odrlPolicy.setPolicyId(URI.create(policyUID));
