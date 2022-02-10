@@ -32,7 +32,7 @@ public class IDSPolicyRestController {
 
     }
 
-    @GetMapping("/policy/ComplexPolicyForm")
+    @GetMapping("/")
     public String getDemo() {
         return "Hallo Welt";
     }
@@ -43,12 +43,12 @@ public class IDSPolicyRestController {
         RecieverOdrlPolicy recieverOdrlPolicy = RequestInputConvert.convertToRecieverOdrlPolicy(requestInput);
         JsonIDSConverter converter = new JsonIDSConverter(recieverOdrlPolicy, RuleType.PERMISSION, ActionType.USE);
         String uid = baseUid + UUID.randomUUID();
-        //converter.addLocationCondition();
-        //converter.addConsumerCondition();
-        //converter.addCounterCondition();
-        //converter.addPaymentCondition();
-        //converter.addPurposeCondition();
-        //converter.addUsagePeriod();
+        converter.addLocationCondition();
+        converter.addConsumerCondition();
+        converter.addCounterCondition();
+        converter.addPaymentCondition();
+        converter.addPurposeCondition();
+        converter.addUsagePeriod();
         return converter.createPolicy(uid);
     }
 
