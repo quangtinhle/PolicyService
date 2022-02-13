@@ -9,11 +9,13 @@ import java.util.ArrayList;
 public class RequestInput{
     @JsonProperty("perferenceUUID")
     private String perferenceUUID;
+    private String citizenUUID;
     private String creationTime;
-    private ArrayList<String> targetData;
+    private boolean active;
+    private String targetData;
     private String dataHistory;
-    private ArrayList<String> dataProviders;
-    private ArrayList<String> dataConsumers;
+    private String dataProviders;
+    private String dataConsumers;
     private String location;
     private Compensation compensation;
     private String modification;

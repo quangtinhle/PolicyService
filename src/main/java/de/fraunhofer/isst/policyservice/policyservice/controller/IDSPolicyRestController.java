@@ -42,7 +42,8 @@ public class IDSPolicyRestController {
     public String complexPolicy(@RequestBody RequestInput requestInput) {
         RecieverOdrlPolicy recieverOdrlPolicy = RequestInputConvert.convertToRecieverOdrlPolicy(requestInput);
         JsonIDSConverter converter = new JsonIDSConverter(recieverOdrlPolicy, RuleType.PERMISSION, ActionType.USE);
-        String uid = baseUid + UUID.randomUUID();
+        //String uid = baseUid + UUID.randomUUID();
+        String uid = baseUid + recieverOdrlPolicy.getPerferenceUUID();
         converter.addLocationCondition();
         converter.addConsumerCondition();
         converter.addCounterCondition();

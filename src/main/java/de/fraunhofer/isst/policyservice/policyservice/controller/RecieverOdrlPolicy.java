@@ -12,7 +12,9 @@ import java.util.List;
 public class RecieverOdrlPolicy {
 
     private String perferenceUUID;
+    private String citizenUUID;
     private String creationTime;
+    private boolean active;
     private String policyType;
     private String target;
     private String provider;
@@ -20,6 +22,8 @@ public class RecieverOdrlPolicy {
     private String counter;
     private String location;
     private String purpose;
+
+
 
 
 
