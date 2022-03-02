@@ -87,6 +87,22 @@ public class JsonIDSConverter {
         return false;
     }
 
+    public void addPreDuties() {
+
+        if (recieverOdrlPolicy.getPreduties_anomym() != "") {
+            anonymizeInRest();
+        }
+    }
+
+    private void anonymizeInRest() {
+        Action anonymizeAction = new Action(ActionType.ANONYMIZE);
+        Rule rule = new Rule(RuleType.OBLIGATION, anonymizeAction);
+        //rule.setTarget(URI.create());
+        preDuties.add(rule);
+    }
+
+
+
  /*   public boolean addPaymentCondition() {
         Compensation compensation = recieverOdrlPolicy.getCompensation();
         if (recieverOdrlPolicy.getPayment() != "") {

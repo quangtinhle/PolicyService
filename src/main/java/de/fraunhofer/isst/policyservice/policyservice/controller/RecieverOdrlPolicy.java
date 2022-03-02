@@ -53,6 +53,7 @@ public class RecieverOdrlPolicy {
 
     private UsagePeriod usagePeriod;
     private Compensation compensation;
+    private String preduties_anomym;
 
 /*    private String encoding;
     private String policy;

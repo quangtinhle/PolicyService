@@ -50,6 +50,7 @@ public class IDSPolicyRestController {
         converter.addPaymentCondition();
         converter.addPurposeCondition();
         converter.addUsagePeriod();
+        converter.addPreDuties();
         return converter.createPolicy(uid);
     }
 

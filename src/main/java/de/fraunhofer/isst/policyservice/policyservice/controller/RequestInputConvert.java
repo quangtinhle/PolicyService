@@ -25,6 +25,7 @@ public class RequestInputConvert {
                 .compensation(requestInput.getCompensation())
                 .usagePeriod(requestInput.getUsagePeriod())
                 .purpose(requestInput.getPurpose())
+                .preduties_anomym(requestInput.getModification())
                 .build();
 
     }
