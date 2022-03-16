@@ -1,4 +1,4 @@
-package de.fraunhofer.isst.policyservice.policyservice.controller;
+package de.fraunhofer.isst.policyservice.policyservice.model;
 
 import lombok.Getter;
 

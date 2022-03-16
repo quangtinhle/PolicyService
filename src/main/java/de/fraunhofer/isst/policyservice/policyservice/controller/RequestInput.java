@@ -1,9 +1,10 @@
 package de.fraunhofer.isst.policyservice.policyservice.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.fraunhofer.isst.policyservice.policyservice.model.Compensation;
+import de.fraunhofer.isst.policyservice.policyservice.model.DataHistory;
+import de.fraunhofer.isst.policyservice.policyservice.model.UsagePeriod;
 import lombok.Getter;
-
-import java.util.ArrayList;
 
 @Getter
 public class RequestInput{
@@ -13,13 +14,13 @@ public class RequestInput{
     private String creationTime;
     private boolean active;
     private String targetData;
-    private String dataHistory;
     private String dataProviders;
     private String dataConsumers;
     private String location;
     private Compensation compensation;
     private String modification;
-    private UsagePeriod usagePeriod;
+    private String usagePeriod;
     private String purpose;
+    private String dataHistory;
     private int usageCount;
 }

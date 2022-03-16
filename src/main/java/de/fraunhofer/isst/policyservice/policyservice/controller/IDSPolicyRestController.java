@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.rmi.server.UID;
+import java.text.ParseException;
 import java.util.UUID;
 
 @RestController
@@ -39,18 +40,19 @@ public class IDSPolicyRestController {
 
 
     @PostMapping("/policy/ComplexPolicy")
-    public String complexPolicy(@RequestBody RequestInput requestInput) {
+    public String complexPolicy(@RequestBody RequestInput requestInput) throws ParseException {
         RecieverOdrlPolicy recieverOdrlPolicy = RequestInputConvert.convertToRecieverOdrlPolicy(requestInput);
         JsonIDSConverter converter = new JsonIDSConverter(recieverOdrlPolicy, RuleType.PERMISSION, ActionType.USE);
         //String uid = baseUid + UUID.randomUUID();
         String uid = baseUid + recieverOdrlPolicy.getPerferenceUUID();
         converter.addLocationCondition();
+        converter.addUsagePeriod();
         converter.addConsumerCondition();
-        converter.addCounterCondition();
+        //converter.addCounterCondition();
         converter.addPaymentCondition();
         converter.addPurposeCondition();
-        converter.addUsagePeriod();
         converter.addPreDuties();
+        converter.addDataHistory();
         return converter.createPolicy(uid);
     }
 

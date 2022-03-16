@@ -1,19 +1,24 @@
 package de.fraunhofer.isst.policyservice.policyservice.controller;
 
 
+import de.fraunhofer.isst.policyservice.policyservice.model.Compensation;
+import de.fraunhofer.isst.policyservice.policyservice.model.DataHistory;
+import de.fraunhofer.isst.policyservice.policyservice.model.UsagePeriod;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Date;
+import java.util.UUID;
+
 @Builder
 @Getter
 @Setter
 public class RecieverOdrlPolicy {
 
     private String perferenceUUID;
-    private String citizenUUID;
-    private String creationTime;
+    private UUID citizenUUID;
+    private Date creationTime;
     private boolean active;
     private String policyType;
     private String target;
@@ -51,9 +56,10 @@ public class RecieverOdrlPolicy {
     private String price;
     private String unit;
 
-    private UsagePeriod usagePeriod;
+    private String usagePeriod;
     private Compensation compensation;
     private String preduties_anomym;
+    private String dataHistory;
 
 /*    private String encoding;
     private String policy;

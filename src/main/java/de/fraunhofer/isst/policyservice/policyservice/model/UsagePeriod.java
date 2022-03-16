@@ -1,4 +1,4 @@
-package de.fraunhofer.isst.policyservice.policyservice.controller;
+package de.fraunhofer.isst.policyservice.policyservice.model;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UsagePeriod {
-
 
     private String durationYear;
     private String durationMonth;

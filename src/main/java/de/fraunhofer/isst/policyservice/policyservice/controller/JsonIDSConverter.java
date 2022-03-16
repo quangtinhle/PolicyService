@@ -2,6 +2,9 @@ package de.fraunhofer.isst.policyservice.policyservice.controller;
 
 import de.fraunhofer.iese.ids.odrl.policy.library.model.*;
 import de.fraunhofer.iese.ids.odrl.policy.library.model.enums.*;
+import de.fraunhofer.isst.policyservice.policyservice.model.Compensation;
+import de.fraunhofer.isst.policyservice.policyservice.model.DataHistory;
+import de.fraunhofer.isst.policyservice.policyservice.model.UsagePeriod;
 import de.fraunhofer.isst.policyservice.policyservice.util.OdrlCreator;
 
 import java.net.URI;
@@ -149,7 +152,7 @@ public class JsonIDSConverter {
         RightOperand elapsedTimeRightOperand = new RightOperand();
         elapsedTimeRightOperand.setType(RightOperandType.DURATIONENTITY);
 
-        UsagePeriod usagePeriod = recieverOdrlPolicy.getUsagePeriod();
+        /*UsagePeriod usagePeriod = recieverOdrlPolicy.getUsagePeriod();
         String hour = "";
         String day = "";
         String month = "";
@@ -165,8 +168,8 @@ public class JsonIDSConverter {
         }
         if (usagePeriod.getDurationYear() != null && !usagePeriod.getDurationYear().isEmpty()) {
             year = usagePeriod.getDurationYear() + TimeUnit.YEARS.getOdrlXsdDuration();
-        }
-        String duration = "P" + year + month + day + hour;
+        }*/
+        String duration = recieverOdrlPolicy.getUsagePeriod();
 
         if (!duration.equals("P")) {
             RightOperandEntity hasDurationEntity = new RightOperandEntity(EntityType.HASDURATION, duration,
@@ -188,6 +191,50 @@ public class JsonIDSConverter {
 
     }
 
+    public boolean addDataHistory() {
+        ArrayList<RightOperandEntity> durationEntities = new ArrayList<>();
+        RightOperand elapsedTimeRightOperand = new RightOperand();
+        elapsedTimeRightOperand.setType(RightOperandType.DURATIONENTITY);
+
+        //DataHistory dataHistory = recieverOdrlPolicy.getDataHistory();
+/*        String hour = "";
+        String day = "";
+        String month = "";
+        String year = "";
+        if (dataHistory.getDurationHour()!= null && !dataHistory.getDurationHour().isEmpty()) {
+            hour = "T" + dataHistory.getDurationHour() + TimeUnit.HOURS.getOdrlXsdDuration();
+        }
+        if (dataHistory.getDurationDay() != null && !dataHistory.getDurationDay().isEmpty()) {
+            day = dataHistory.getDurationDay() + TimeUnit.DAYS.getOdrlXsdDuration();
+        }
+        if (dataHistory.getDurationMonth() != null && !dataHistory.getDurationMonth().isEmpty()) {
+            month = dataHistory.getDurationMonth() + TimeUnit.MONTHS.getOdrlXsdDuration();
+        }
+        if (dataHistory.getDurationYear() != null && !dataHistory.getDurationYear().isEmpty()) {
+            year = dataHistory.getDurationYear() + TimeUnit.YEARS.getOdrlXsdDuration();
+        }*/
+        String duration = recieverOdrlPolicy.getDataHistory();
+
+        if (!duration.equals("P")) {
+            RightOperandEntity hasDurationEntity = new RightOperandEntity(EntityType.HASDURATION, duration,
+                    RightOperandType.DURATION);
+            // hasDurationEntity.setTimeUnit(TimeUnit.valueOf(restrictTimeDurationUnit));
+            durationEntities.add(hasDurationEntity);
+        }
+
+        if (durationEntities.size() > 0) {
+            elapsedTimeRightOperand.setEntities(durationEntities);
+            ArrayList<RightOperand> elapsedTimeRightOperands = new ArrayList<>();
+            elapsedTimeRightOperands.add(elapsedTimeRightOperand);
+            Condition elapsedTimeConstraint = new Condition(ConditionType.CONSTRAINT, LeftOperand.DATA_HISTORY,
+                    Operator.SHORTER_EQ, elapsedTimeRightOperands, null);
+            constraints.add(elapsedTimeConstraint);
+            return true;
+        }
+        return false;
+
+    }
+
     public String createPolicy(String policyUID) {
 
         rules.get(0).setConstraints((ArrayList<Condition>) constraints);
@@ -200,6 +247,9 @@ public class JsonIDSConverter {
         OdrlPolicy odrlPolicy = new OdrlPolicy();
         odrlPolicy.setProvider(createProvider());
         odrlPolicy.setConsumer(createConsumer());
+        odrlPolicy.setCitizenUUID(recieverOdrlPolicy.getCitizenUUID());
+        odrlPolicy.setCreationTime(recieverOdrlPolicy.getCreationTime());
+        odrlPolicy.setStatus(recieverOdrlPolicy.isActive());
         odrlPolicy.setRules((ArrayList<Rule>) rules);
         odrlPolicy.setPolicyId(URI.create(policyUID));
         odrlPolicy.setType(PolicyType.getFromIdsString("ids:Contract" + recieverOdrlPolicy.getPolicyType()));
