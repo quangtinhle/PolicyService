@@ -139,6 +139,23 @@ public class JsonIDSConverter {
      return false;
  }
 
+    public boolean addMinCompensationCondition() {
+        Double minCompensation = recieverOdrlPolicy.getMinCompensation();
+        if (minCompensation != null ) {
+            //String contract = "http://dbpedia.org/page/";
+            RightOperand paymentRightOperand = new RightOperand(String.valueOf(minCompensation), RightOperandType.DOUBLE);
+            ArrayList<RightOperand> paymentRightOperands = new ArrayList<>();
+            paymentRightOperands.add(paymentRightOperand);
+            Condition paymentCondition = new Condition(ConditionType.CONSTRAINT, LeftOperand.PAY_AMOUNT, Operator.EQ,
+                    paymentRightOperands, null);
+            //paymentCondition.setUnit("http://dbpedia.org/resource/" + compensation.getUnit());
+            //paymentCondition.setContract(contract + compensation.getPayment());
+            constraints.add(paymentCondition);
+            return true;
+        }
+        return false;
+    }
+
     private String checkIfEmptyValue(String value, String defaultValue) {
         if (value.length() > 0) {
             return value;

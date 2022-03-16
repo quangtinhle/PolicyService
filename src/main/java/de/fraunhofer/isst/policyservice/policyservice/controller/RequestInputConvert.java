@@ -33,6 +33,7 @@ public class RequestInputConvert {
                 .purpose(requestInput.getPurpose())
                 .preduties_anomym(requestInput.getModification())
                 .dataHistory(requestInput.getDataHistory())
+                .minCompensation((requestInput.getMinCompensation()))
                 .build();
 
     }

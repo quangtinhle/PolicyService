@@ -27,6 +27,7 @@ public class RecieverOdrlPolicy {
     private String counter;
     private String location;
     private String purpose;
+    private Double minCompensation;
 
 
 

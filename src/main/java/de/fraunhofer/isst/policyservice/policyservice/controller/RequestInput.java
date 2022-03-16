@@ -22,5 +22,6 @@ public class RequestInput{
     private String usagePeriod;
     private String purpose;
     private String dataHistory;
+    private Double minCompensation;
     private int usageCount;
 }

@@ -1,0 +1,20 @@
+{
+  "citizenUUID":"cbfef29e-8d0f-11ec-b909-0242ac120002",
+  "perferenceUUID": "1470df60-8b0d-11ec-b1e5-0800200c9a99",
+  "creationTime": "2022-02-13T21:01:30+00:00",
+  "active":true,
+  "targetData": "http://example.com/targetURL",
+  "dataHistory": "P3M",
+  "dataProviders": "https://isst.fraunhofer.de/provider",
+  "dataConsumers": "https://aisec.fraunhofer.de/consumer",
+  "location": "EU",
+  "minCompensation":3,
+  "compensation": {
+    "payment": "Monthly",
+    "price": 15,
+    "unit": "EUR"
+  },
+  "modification": "anonym",
+  "usagePeriod": "P7D",
+  "purpose": "Research"
+}

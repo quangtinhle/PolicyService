@@ -49,7 +49,8 @@ public class IDSPolicyRestController {
         converter.addUsagePeriod();
         converter.addConsumerCondition();
         //converter.addCounterCondition();
-        converter.addPaymentCondition();
+        //converter.addPaymentCondition();
+        converter.addMinCompensationCondition();
         converter.addPurposeCondition();
         converter.addPreDuties();
         converter.addDataHistory();
